@@ -6,18 +6,22 @@ import az.edu.itbrains.models.Category;
 import az.edu.itbrains.repositories.ArticleRepository;
 import az.edu.itbrains.repositories.CategoryRepository;
 import az.edu.itbrains.services.CategoryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
-
     @Autowired
     private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public void createCategory(CategoryAddDto categoryAddDto) {
@@ -29,7 +33,11 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryHomeDto> getHomeCategories() {
-        return null;
+        List<CategoryHomeDto> categories = categoryRepository.findAll()
+                .stream()
+                .map(category-> modelMapper.map(category, CategoryHomeDto.class))
+                .toList();
+
+        return categories;
     }
 }
-
