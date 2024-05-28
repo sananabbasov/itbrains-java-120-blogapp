@@ -6,6 +6,7 @@ import az.edu.itbrains.repositories.UserRepository;
 import az.edu.itbrains.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = userRepository.findByEmail(userRegisterDto.getEmail());
         if (user != null)
         {
-            throw new RuntimeException();
+            throw new UsernameNotFoundException("Istifadeci tapilmadi");
         }
         UserEntity newUser = modelMapper.map(userRegisterDto, UserEntity.class);
         newUser.setPassword(encoder.encode(userRegisterDto.getPassword()));

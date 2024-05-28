@@ -17,9 +17,6 @@ public class HomeController {
     @GetMapping("/")
     public String Index()
     {
-        CategoryAddDto test = new CategoryAddDto();
-        test.setName("Texnologiya");
-        categoryService.createCategory(test);
         return "Home";
     }
 
