@@ -9,7 +9,7 @@
 </head>
 <body>
 <div layout:fragment="body">
-    <a th:href="@{/admin/category/add}" class="btn btn-outline-success">Create</a>
+    <a th:href="@{/dashboard/category/add}" class="btn btn-outline-success">Create</a>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -23,8 +23,8 @@
             <th th:text="${category.id}" scope="row">1</th>
             <td th:text="${category.name}">Mark</td>
             <td>
-                <a href="/admin/category/update" class="btn btn-outline-warning">Update</a>
-                <a href="/admin/category/delete" class="btn btn-outline-danger">Delete</a>
+                <a th:href="'/dashboard/category/update/'+${category.id}" class="btn btn-outline-warning">Update</a>
+                <a th:href="'/dashboard/category/delete/'+${category.id}" class="btn btn-outline-danger">Delete</a>
             </td>
         </tr>
 

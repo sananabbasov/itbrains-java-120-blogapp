@@ -16,6 +16,12 @@ public class AuthController {
     private UserService userService;
 
 
+    @GetMapping("/login")
+    public String login()
+    {
+        return "/auth/login";
+    }
+
     @GetMapping("/register")
     public String register()
     {

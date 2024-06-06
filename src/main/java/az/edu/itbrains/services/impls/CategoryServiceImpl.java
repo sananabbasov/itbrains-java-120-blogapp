@@ -2,6 +2,7 @@ package az.edu.itbrains.services.impls;
 
 import az.edu.itbrains.dtos.CategoryDtos.CategoryAddDto;
 import az.edu.itbrains.dtos.CategoryDtos.CategoryHomeDto;
+import az.edu.itbrains.dtos.CategoryDtos.CategoryUpdateDto;
 import az.edu.itbrains.models.Category;
 import az.edu.itbrains.repositories.ArticleRepository;
 import az.edu.itbrains.repositories.CategoryRepository;
@@ -39,5 +40,30 @@ public class CategoryServiceImpl implements CategoryService {
                 .toList();
 
         return categories;
+    }
+
+    @Override
+    public void updateCategory(CategoryUpdateDto categoryUpdateDto, Long id) {
+        Category findCategory = categoryRepository.findById(id).orElseThrow();
+        findCategory.setName(categoryUpdateDto.getName());
+        categoryRepository.save(findCategory);
+    }
+
+    @Override
+    public CategoryUpdateDto findUpdateCategory(Long id) {
+        Category findCategory = categoryRepository.findById(id).orElseThrow();
+        CategoryUpdateDto result = modelMapper.map(findCategory, CategoryUpdateDto.class);
+        return result;
+    }
+
+    @Override
+    public void deleteCategory(Long id) {
+        Category category = categoryRepository.findById(id).orElseThrow();
+        categoryRepository.delete(category);
+    }
+
+    @Override
+    public Category findCategoryById(Long id) {
+        return categoryRepository.findById(id).orElseThrow();
     }
 }

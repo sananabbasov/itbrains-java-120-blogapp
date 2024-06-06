@@ -30,12 +30,12 @@ public class SecurityConfig {
         http
                 .csrf(c->c.disable())
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/dashboard/**").authenticated();
+                    request.requestMatchers("/dashboard/**");
                     request.anyRequest().permitAll();
                 })
                 .formLogin(form -> {
-//                    form.loginPage("/login");
-                    form.defaultSuccessUrl("/admin");
+                    form.loginPage("/login");
+                    form.defaultSuccessUrl("/dashboard");
                     form.failureUrl("/login?auth=false");
                 });
 
