@@ -1,8 +1,6 @@
 package az.edu.itbrains.services.impls;
 
-import az.edu.itbrains.dtos.ArticleDtos.ArticleCreateDto;
-import az.edu.itbrains.dtos.ArticleDtos.ArticleDashboardDto;
-import az.edu.itbrains.dtos.ArticleDtos.ArticleUpdateDto;
+import az.edu.itbrains.dtos.ArticleDtos.*;
 import az.edu.itbrains.models.Article;
 import az.edu.itbrains.models.Category;
 import az.edu.itbrains.repositories.ArticleRepository;
@@ -65,5 +63,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void removeArticle(Long id) {
 
+    }
+
+    @Override
+    public List<ArticleHomeDto> getHomeArticle() {
+
+        List<Article> articles = articleRepository.findAll();
+        List<ArticleHomeDto> result = articles.stream().map(article-> modelMapper.map(article,ArticleHomeDto.class)).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public ArticleDetailDto getDetail(Long id) {
+        Article article = articleRepository.findById(id).orElseThrow();
+        ArticleDetailDto result = modelMapper.map(article, ArticleDetailDto.class);
+        return result;
     }
 }

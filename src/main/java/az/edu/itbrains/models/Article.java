@@ -22,6 +22,7 @@ public class Article {
     private String photoUrl;
     private int viewCount;
     private Date createdDate;
+    private Boolean isFeatured;
 
     @ManyToOne
     private Category category;

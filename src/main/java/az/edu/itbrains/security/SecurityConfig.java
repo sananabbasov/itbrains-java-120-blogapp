@@ -30,7 +30,7 @@ public class SecurityConfig {
         http
                 .csrf(c->c.disable())
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/dashboard/**");
+                    request.requestMatchers("/dashboard/**").authenticated();
                     request.anyRequest().permitAll();
                 })
                 .formLogin(form -> {
