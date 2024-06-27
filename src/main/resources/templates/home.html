@@ -18,7 +18,7 @@
                 <div class="masonry-blog clearfix">
                     <div class="first-slot">
                         <div class="masonry-box post-media">
-                            <img src="upload/tech_01.jpg" alt="" class="img-fluid">
+                            <img src="/front/upload/tech_01.jpg" alt="" class="img-fluid">
                             <div class="shadoweffect">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
@@ -34,7 +34,7 @@
 
                     <div class="second-slot">
                         <div class="masonry-box post-media">
-                            <img src="upload/tech_02.jpg" alt="" class="img-fluid">
+                            <img src="/front/upload/tech_02.jpg" alt="" class="img-fluid">
                             <div class="shadoweffect">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
@@ -50,7 +50,7 @@
 
                     <div class="last-slot">
                         <div class="masonry-box post-media">
-                            <img src="upload/tech_03.jpg" alt="" class="img-fluid">
+                            <img src="/front/upload/tech_03.jpg" alt="" class="img-fluid">
                             <div class="shadoweffect">
                                 <div class="shadow-desc">
                                     <div class="blog-meta">
@@ -89,7 +89,7 @@
 
                                     <div class="blog-meta big-meta col-md-8">
                                         <h4><a th:text="${article.title}" th:href="'/article/detail/'+${article.id}" title=""></a></h4>
-                                        <p>Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
+                                        <p th:text="${article.description}">Aenean interdum arcu blandit, vehicula magna non, placerat elit. Mauris et pharetratortor. Suspendissea sodales urna. In at augue elit. Vivamus enim nibh, maximus ac felis nec, maximus tempor odio.</p>
                                         <small class="firstsmall"><a class="bg-orange" href="tech-category-01.html" title="">Gadgets</a></small>
                                         <small><a href="tech-single.html" title="">21 July, 2017</a></small>
                                         <small><a href="tech-author.html" title="">by Matilda</a></small>
@@ -108,9 +108,7 @@
                             <div class="col-md-12">
                                 <nav aria-label="Page navigation">
                                     <ul class="pagination justify-content-start">
-                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li th:each="page : ${#numbers.sequence( 1, pagination)}" class="page-item"><a th:text="${page}" class="page-link" th:href="'?currentPage='+${page}">1</a></li>
                                         <li class="page-item">
                                             <a class="page-link" href="#">Next</a>
                                         </li>
@@ -133,51 +131,24 @@
                             <div class="widget">
                                 <h2 class="widget-title">Trend Videos</h2>
                                 <div class="trend-videos">
-                                    <div class="blog-box">
+
+
+                                    <div th:each="trend : ${trends}" class="blog-box">
                                         <div class="post-media">
                                             <a href="tech-single.html" title="">
-                                                <img src="upload/tech_video_01.jpg" alt="" class="img-fluid">
+                                                <img th:src="'/uploads/'+${trend.photoUrl}" alt="" class="img-fluid">
+
                                                 <div class="hovereffect">
                                                     <span class="videohover"></span>
                                                 </div><!-- end hover -->
                                             </a>
                                         </div><!-- end media -->
                                         <div class="blog-meta">
-                                            <h4><a href="tech-single.html" title="">We prepared the best 10 laptop presentations for you</a></h4>
+                                            <h4><a th:href="'/article/detail/'+${trend.id}" th:text="${trend.title}" title="">We prepared the best 10 laptop presentations for you</a></h4>
                                         </div><!-- end meta -->
                                     </div><!-- end blog-box -->
 
-                                    <hr class="invis">
 
-                                    <div class="blog-box">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_video_02.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect">
-                                                    <span class="videohover"></span>
-                                                </div><!-- end hover -->
-                                            </a>
-                                        </div><!-- end media -->
-                                        <div class="blog-meta">
-                                            <h4><a href="tech-single.html" title="">We are guests of ABC Design Studio - Vlog</a></h4>
-                                        </div><!-- end meta -->
-                                    </div><!-- end blog-box -->
-
-                                    <hr class="invis">
-
-                                    <div class="blog-box">
-                                        <div class="post-media">
-                                            <a href="tech-single.html" title="">
-                                                <img src="upload/tech_video_03.jpg" alt="" class="img-fluid">
-                                                <div class="hovereffect">
-                                                    <span class="videohover"></span>
-                                                </div><!-- end hover -->
-                                            </a>
-                                        </div><!-- end media -->
-                                        <div class="blog-meta">
-                                            <h4><a href="tech-single.html" title="">Both blood pressure monitor and intelligent clock</a></h4>
-                                        </div><!-- end meta -->
-                                    </div><!-- end blog-box -->
                                 </div><!-- end videos -->
                             </div><!-- end widget -->
 

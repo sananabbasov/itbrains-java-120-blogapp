@@ -33,4 +33,10 @@ public class UserServiceImpl implements UserService {
         newUser.setPassword(encoder.encode(userRegisterDto.getPassword()));
         userRepository.save(newUser);
     }
+
+    @Override
+    public UserEntity findByEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        return user;
+    }
 }

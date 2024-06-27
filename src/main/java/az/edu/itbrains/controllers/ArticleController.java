@@ -1,13 +1,13 @@
 package az.edu.itbrains.controllers;
 
 
-import az.edu.itbrains.dtos.ArticleDtos.ArticleCreateDto;
-import az.edu.itbrains.dtos.ArticleDtos.ArticleDashboardDto;
-import az.edu.itbrains.dtos.ArticleDtos.ArticleDetailDto;
-import az.edu.itbrains.dtos.ArticleDtos.ArticleHomeDto;
+import az.edu.itbrains.dtos.ArticleDtos.*;
 import az.edu.itbrains.dtos.CategoryDtos.CategoryHomeDto;
+import az.edu.itbrains.dtos.CommentDtos.CommentCreateDto;
+import az.edu.itbrains.dtos.CommentDtos.CommentDto;
 import az.edu.itbrains.services.ArticleService;
 import az.edu.itbrains.services.CategoryService;
+import az.edu.itbrains.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,6 +38,9 @@ public class ArticleController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CommentService commentService;
+
 
 
     @GetMapping("/dashboard/article")
@@ -51,10 +55,24 @@ public class ArticleController {
     public String detail(Model model, @PathVariable Long id)
     {
         ArticleDetailDto articleDetail = articleService.getDetail(id);
+        List<CommentDto> commentDto = commentService.getCommentsByArticleId(id);
+        List<ArticleTrendVideoDto> trends = articleService.getTrendVideos();
+        List<ArticleRelatedDto> articleRelated = articleService.getRelatedArticles(articleDetail.getCategory().getId());
         model.addAttribute("article",articleDetail);
+        model.addAttribute("comments",commentDto);
+        model.addAttribute("trends", trends);
+        model.addAttribute("related",articleRelated);
         return "/detail";
     }
 
+
+    @PostMapping("/article/detail/{id}")
+    public String addComment(CommentCreateDto commentCreate,Principal principal, @PathVariable Long id){
+        String username = principal.getName();
+        commentCreate.setArticleId(id);
+        commentService.addComment(commentCreate,username);
+        return "redirect:/article/detail/"+commentCreate.getArticleId();
+    }
 
     @GetMapping("/dashboard/article/create")
     public String create(Model model)

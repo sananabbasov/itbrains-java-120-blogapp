@@ -35,7 +35,7 @@ public class SecurityConfig {
                 })
                 .formLogin(form -> {
                     form.loginPage("/login");
-                    form.defaultSuccessUrl("/dashboard");
+                    form.defaultSuccessUrl("/");
                     form.failureUrl("/login?auth=false");
                 });
 
