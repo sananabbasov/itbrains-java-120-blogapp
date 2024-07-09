@@ -30,4 +30,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+      - name: Restart API Service
+        run: |
+            mvn spring-boot:run
