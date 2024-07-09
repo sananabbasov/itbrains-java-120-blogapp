@@ -31,7 +31,7 @@ public class HomeController {
         model.addAttribute("articles", articles.getArticles());
         model.addAttribute("trends", trends);
         model.addAttribute("pagination", articles.getPageSize());
-        return "/Home";
+        return "/home";
     }
 
     @GetMapping("/contact")
