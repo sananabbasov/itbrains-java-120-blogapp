@@ -8,9 +8,14 @@ import az.edu.itbrains.dtos.CommentDtos.CommentDto;
 import az.edu.itbrains.services.ArticleService;
 import az.edu.itbrains.services.CategoryService;
 import az.edu.itbrains.services.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +27,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class ArticleController {
@@ -83,7 +87,22 @@ public class ArticleController {
     }
 
     @PostMapping("/dashboard/article/create")
-    public String create(ArticleCreateDto articleCreateDto, @RequestParam("image")MultipartFile file) throws IOException {
+    public String create(@Valid ArticleCreateDto articleCreateDto, BindingResult result,
+                                HttpServletRequest httpRequest,
+                         HttpSession httpSession, @RequestParam("image")MultipartFile file) throws IOException {
+
+        if (result.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            result.getAllErrors().forEach((error) -> {
+                String fieldName = ((FieldError) error).getField();
+                String errorMessage = error.getDefaultMessage();
+                errors.add(errorMessage);
+            });
+            httpSession.setAttribute("errors", errors);
+
+            return "redirect:/dashboard/article/create";
+        }
+
         UUID rand = UUID.randomUUID();
         StringBuilder fileNames = new StringBuilder();
         Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,rand + file.getOriginalFilename());

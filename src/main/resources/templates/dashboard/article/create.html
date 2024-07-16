@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html
         xmlns:th="http://thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:spring="http://www.w3.org/1999/XSL/Transform"
         layout:decorate="~{/dashboard/layout}">
 <head>
     <meta charset="UTF-8">
@@ -11,17 +11,18 @@
 <div layout:fragment="body">
 
     <form method="post" enctype="multipart/form-data">
+        <p th:each="error : ${errors}">Salam</p>
         <div class="form-group">
             <input type="text" name="title" class="form-control col-4" placeholder="Title" />
         </div>
         <div class="form-group">
-            <textarea id="cemil" type="text" name="description" class="form-control col-4" placeholder="Description" ></textarea>
+            <textarea id="cemil" type="text" name="description" class="form-control col-4" placeholder="Description"></textarea>
         </div>
         <div class="form-group">
             <input type="file" name="image" class="form-control col-4" />
         </div>
         <div class="form-group">
-            <select class="form-control col-4" name="categoryId">
+            <select class="form-control col-4" name="categoryId" >
                 <option th:text="${category.name}" th:value="${category.id}" th:each="category : ${categories}"></option>
             </select>
         </div>
